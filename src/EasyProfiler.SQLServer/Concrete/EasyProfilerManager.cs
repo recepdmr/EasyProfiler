@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EasyProfiler.SQLServer.Concrete
@@ -33,9 +34,9 @@ namespace EasyProfiler.SQLServer.Concrete
         /// <returns>
         /// List of profiler.
         /// </returns>
-        public async Task<List<Profiler>> AdvancedFilterAsync(AdvancedFilterModel filterModel)
+        public async Task<List<Profiler>> AdvancedFilterAsync(AdvancedFilterModel filterModel, CancellationToken cancellationToken = default)
         {
-            return await profilerDbContext.Profilers.ApplyFilter(filterModel).ToListAsync();
+            return await profilerDbContext.Profilers.ApplyFilter(filterModel).ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace EasyProfiler.SQLServer.Concrete
         /// <returns>
         /// NoContent.
         /// </returns>
-        public async Task InsertLogAsync(Profiler profiler)
+        public async Task InsertLogAsync(Profiler profiler, CancellationToken cancellationToken = default)
         {
             profiler.Id = Guid.NewGuid();
-            await profilerDbContext.Profilers.AddAsync(profiler);
-            await profilerDbContext.SaveChangesAsync();
+            await profilerDbContext.Profilers.AddAsync(profiler, cancellationToken);
+            await profilerDbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

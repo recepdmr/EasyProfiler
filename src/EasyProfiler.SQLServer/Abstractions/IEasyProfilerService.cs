@@ -3,6 +3,7 @@ using EasyProfiler.SQLServer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EasyProfiler.SQLServer.Abstractions
@@ -21,7 +22,7 @@ namespace EasyProfiler.SQLServer.Abstractions
         /// <returns>
         /// NoContent.
         /// </returns>
-        Task InsertLogAsync(Profiler profiler);
+        Task InsertLogAsync(Profiler profiler, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Advanced filter.
@@ -32,6 +33,6 @@ namespace EasyProfiler.SQLServer.Abstractions
         /// <returns>
         /// List of profiler.
         /// </returns>
-        Task<List<Profiler>> AdvancedFilterAsync(AdvancedFilterModel filterModel);
+        Task<List<Profiler>> AdvancedFilterAsync(AdvancedFilterModel filterModel, CancellationToken cancellationToken = default);
     }
 }
